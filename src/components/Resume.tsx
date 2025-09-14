@@ -113,17 +113,7 @@ const Resume = () => {
                   <Eye size={20} />
                   View Online
                 </motion.a>
-                <motion.a
-                  href="https://drive.google.com/file/d/1R9cIjIkEWbsGNWEDDbLnxY-gK3MM4mnF/view"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-white/50 rounded-full text-white hover:bg-white/10 transition-all duration-300"
-                >
-                  <Download size={20} />
-                  Download
-                </motion.a>
+                
               </div>
             </Card>
           </motion.div>

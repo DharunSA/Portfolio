@@ -1,58 +1,72 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Calendar, MapPin, ExternalLink } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const Experience = () => {
+  const { ref, isInView } = useScrollAnimation();
+  
   const experiences = [
     {
-      title: "Full-Stack Developer Intern",
-      company: "Tech Startup",
-      location: "Remote",
-      period: "Jun 2023 - Aug 2023",
+      title: "Software Engineer Intern",
+      company: "Titan Company LTD",
+      location: "Bengaluru, Karnataka",
+      period: "Jun 2025 – Jul 2025",
       type: "Internship",
-      description: "Developed and maintained web applications using modern technologies. Worked on both frontend and backend development, contributing to multiple client projects.",
+      description: "Built a comprehensive full-stack employee management system using modern web technologies. Gained hands-on experience in enterprise-level software development and system architecture.",
       achievements: [
-        "Built responsive web applications using React.js and Node.js",
-        "Implemented RESTful APIs and database integration",
-        "Collaborated with team members on version control using Git"
+        "Built a full-stack employee management system using MongoDB, Express.js, React.js, and Node.js (MERN)",
+        "Implemented secure authentication and authorization systems",
+        "Developed RESTful APIs for seamless data management",
+        "Created real-time dashboards with advanced search and filter functionality",
+        "Integrated project management and attendance tracking features",
+        "Implemented file upload capabilities for end-to-end functionality"
       ],
-      technologies: ["React.js", "Node.js", "MongoDB", "Express.js", "JavaScript"]
-    },
-    {
-      title: "Web Development Trainee",
-      company: "Local IT Company",
-      location: "Hyderabad, India",
-      period: "Jan 2023 - May 2023",
-      type: "Training",
-      description: "Intensive training program focused on modern web development technologies and best practices. Worked on real-world projects to gain practical experience.",
-      achievements: [
-        "Completed comprehensive training in MERN stack development",
-        "Developed multiple projects showcasing frontend and backend skills",
-        "Gained experience in database design and API development"
-      ],
-      technologies: ["HTML5", "CSS3", "JavaScript", "React.js", "Node.js", "MongoDB"]
+      technologies: ["React.js", "Node.js", "Express.js", "MongoDB", "JavaScript", "REST APIs", "Authentication"]
     }
   ];
 
   return (
-    <section id="experience" className="py-20 px-6">
-      <div className="container mx-auto max-w-6xl">
+    <section id="experience" className="py-20 px-6 relative">
+      {/* Section Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-transparent dark:via-slate-900/50" />
+      
+      <div className="container mx-auto max-w-6xl relative">
         <motion.div
+          ref={ref}
           initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
           className="text-center mb-16"
         >
+          <div className="inline-flex items-center gap-3 mb-4">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={isInView ? { scale: 1 } : { scale: 0 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="p-3 glass-card rounded-full"
+            >
+              <Briefcase className="text-blue-500 dark:text-blue-400" size={32} />
+            </motion.div>
+          </div>
+          
           <h2 
-            className="text-5xl md:text-6xl font-bold text-white mb-4"
-            style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
+            className="text-4xl md:text-5xl font-bold mb-4"
+            style={{ fontFamily: 'Playfair Display, serif', fontWeight: '600' }}
           >
-            Work Experience
+            <span className="text-gradient">Work Experience</span>
           </h2>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto">
-            Professional journey building innovative solutions and leading technical teams
+          
+          <motion.div
+            initial={{ width: 0 }}
+            animate={isInView ? { width: "100%" } : { width: 0 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="h-1 bg-gradient-primary mx-auto mb-6"
+            style={{ maxWidth: '200px' }}
+          />
+          
+          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+            Professional journey building innovative solutions and gaining hands-on industry experience
           </p>
         </motion.div>
 
@@ -64,35 +78,31 @@ const Experience = () => {
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="relative"
+                className="relative mb-8"
               >
-                {/* Timeline Dot */}
-                <div className="absolute left-6 top-8 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-white/20 hidden lg:block" />
-                
-                <Card className="lg:ml-20 p-8 backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/15 transition-all duration-300 group">
+                <div className="glass-card rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300 group">
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
-                    <div className="flex items-start gap-4 mb-4 lg:mb-0">
+                    <div className="flex items-start gap-6 mb-6 lg:mb-0 flex-1">
                       <motion.div
                         whileHover={{ scale: 1.1, rotate: 5 }}
-                        className="p-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full flex-shrink-0"
+                        className="p-4 glass rounded-xl group-hover:bg-gradient-primary transition-all duration-300"
                       >
-                        <Briefcase className="text-white" size={24} />
+                        <Briefcase className="text-blue-500 dark:text-blue-400 group-hover:text-white transition-colors duration-300" size={28} />
                       </motion.div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">
+                      <div className="flex-1">
+                        <h3 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white mb-2 group-hover:text-gradient transition-colors duration-300">
                           {exp.title}
                         </h3>
-                        <p className="text-lg text-white/80 font-medium mb-2">{exp.company}</p>
-                        <div className="flex flex-col sm:flex-row gap-4 text-white/60 mb-4">
-                          <div className="flex items-center gap-1">
+                        <p className="text-lg text-slate-600 dark:text-slate-300 font-medium mb-3">{exp.company}</p>
+                        <div className="flex flex-col sm:flex-row gap-4 text-slate-500 dark:text-slate-400">
+                          <div className="flex items-center gap-2">
                             <MapPin size={16} />
                             <span>{exp.location}</span>
                           </div>
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-2">
                             <Calendar size={16} />
                             <span>{exp.period}</span>
                           </div>
@@ -100,19 +110,19 @@ const Experience = () => {
                       </div>
                     </div>
                     <div className="flex-shrink-0">
-                      <span className="px-4 py-2 bg-white/20 border border-white/30 rounded-full text-sm text-white font-medium">
+                      <span className="px-4 py-2 glass rounded-full text-sm text-slate-700 dark:text-white font-medium">
                         {exp.type}
                       </span>
                     </div>
                   </div>
                   
-                  <p className="text-white/70 mb-6 leading-relaxed">{exp.description}</p>
+                  <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed text-lg">{exp.description}</p>
                   
                   <div className="mb-6">
-                    <h4 className="text-white font-semibold mb-3">Key Achievements:</h4>
-                    <ul className="space-y-2">
+                    <h4 className="text-slate-800 dark:text-white font-semibold mb-3">Key Achievements:</h4>
+                    <ul className="space-y-3">
                       {exp.achievements.map((achievement, idx) => (
-                        <li key={idx} className="text-white/70 flex items-start gap-2">
+                        <li key={idx} className="text-slate-600 dark:text-slate-300 flex items-start gap-3">
                           <span className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
                           {achievement}
                         </li>
@@ -124,14 +134,14 @@ const Experience = () => {
                     {exp.technologies.map((tech, idx) => (
                       <motion.span
                         key={idx}
-                        whileHover={{ scale: 1.05 }}
-                        className="px-3 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-white/30 rounded-full text-sm text-white/80"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        className="px-3 py-2 glass rounded-full text-sm text-slate-700 dark:text-slate-300 hover:bg-gradient-primary hover:text-white transition-all duration-300 cursor-default"
                       >
                         {tech}
                       </motion.span>
                     ))}
                   </div>
-                </Card>
+                </div>
               </motion.div>
             ))}
           </div>
