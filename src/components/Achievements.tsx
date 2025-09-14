@@ -1,6 +1,6 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
-import { Award, Trophy, Star, Medal, Target, Zap } from 'lucide-react';
+import { Award, Trophy, Star, Medal,  } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const Achievements = () => {

@@ -1,35 +1,10 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
-import { Download, FileText, Eye, Star, CheckCircle } from 'lucide-react';
+import {  FileText, Eye, CheckCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
 const Resume = () => {
-  const references = [
-    {
-      name: "Dr. Sarah Johnson",
-      position: "Professor of Computer Science",
-      organization: "University Name",
-      email: "sarah.johnson@university.edu",
-      phone: "+1 (555) 123-4567",
-      relationship: "Academic Supervisor & Research Mentor"
-    },
-    {
-      name: "Michael Chen",
-      position: "Senior Engineering Manager",
-      organization: "Tech Company Name",
-      email: "michael.chen@techcompany.com",
-      phone: "+1 (555) 987-6543",
-      relationship: "Direct Manager & Team Lead"
-    },
-    {
-      name: "Emily Rodriguez",
-      position: "Product Manager",
-      organization: "Previous Company",
-      email: "emily.rodriguez@prevcompany.com",
-      phone: "+1 (555) 456-7890",
-      relationship: "Cross-functional Collaborator"
-    }
-  ];
+ 
 
   const resumeHighlights = [
     "B.Tech in Computer Science and Engineering (8.5 CGPA)",
