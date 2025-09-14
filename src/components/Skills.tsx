@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { Code, Database, Globe, Cpu, Paintbrush, Users, Sparkles } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
