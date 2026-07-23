@@ -1,287 +1,114 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github, Linkedin,  ExternalLink, MessageCircle } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useEffect, useRef, useState } from 'react';
+import { siteConfig } from '@/data/siteConfig';
 
 const Contact = () => {
-  const { ref, isInView } = useScrollAnimation();
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const { email, socials } = siteConfig;
+  const [localTime, setLocalTime] = useState('');
+  const currentYear = new Date().getFullYear();
 
-  const contactInfo = [
-    {
-      icon: <Mail size={24} />,
-      label: "Email",
-      value: "dharun887@gmail.com",
-      href: "mailto:dharun887@gmail.com"
-    },
-    {
-      icon: <Phone size={24} />,
-      label: "Phone",
-      value: "+91-6381814730",
-      href: "tel:+916381814730"
-    },
-    {
-      icon: <MapPin size={24} />,
-      label: "Location",
-      value: "Hosur, Tamil Nadu",
-      href: "#"
-    }
-  ];
-
-  const socialLinks = [
-    {
-      name: "GitHub",
-      icon: <Github size={24} />,
-      url: "https://github.com/DharunSA",
-      color: "hover:text-purple-300"
-    },
-    {
-      name: "LinkedIn",
-      icon: <Linkedin size={24} />,
-      url: "https://linkedin.com/in/dharun-sa-550648204",
-      color: "hover:text-blue-300"
-    }
-  ];
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData);
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
-    setFormData({ name: '', email: '', message: '' });
-  };
+  // Live IST clock
+  useEffect(() => {
+    const updateTime = () =>
+      setLocalTime(
+        new Date().toLocaleTimeString('en-US', {
+          timeZone: siteConfig.timezone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+        })
+      );
+    updateTime();
+    const id = setInterval(updateTime, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
-    <section id="contact" className="py-20 px-6 relative">
-      {/* Section Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-transparent dark:via-slate-900/50" />
-      
-      <div className="container mx-auto max-w-6xl relative">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-3 mb-4">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={isInView ? { scale: 1 } : { scale: 0 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="p-3 glass-card rounded-full"
-            >
-              <MessageCircle className="text-green-500 dark:text-green-400" size={32} />
-            </motion.div>
-          </div>
-          
-          <h2 
-            className="text-4xl md:text-5xl font-bold mb-4"
-            style={{ fontFamily: 'Playfair Display, serif', fontWeight: '600' }}
-          >
-            <span className="text-gradient">Let's Connect</span>
+    <>
+      {/* ── Contact CTA ───────────────────────────────────── */}
+      <section
+        id="contact"
+        className="w-full max-w-2xl mx-auto flex flex-col justify-center items-center text-center px-4 py-16"
+      >
+        <div className="max-w-2xl w-full flex flex-col items-center justify-center gap-4">
+          {/* Heading */}
+          <h2 className="text-3xl sm:text-4xl font-instrumentserif font-light text-text-primary">
+            Let&apos;s work together.
           </h2>
-          
-          <motion.div
-            initial={{ width: 0 }}
-            animate={isInView ? { width: "100%" } : { width: 0 }}
-            transition={{ delay: 0.4, duration: 1 }}
-            className="h-1 bg-gradient-primary mx-auto mb-6"
-            style={{ maxWidth: '150px' }}
-          />
-          
-          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            Ready to collaborate on your next project? Let's discuss how we can work together
-          </p>
-        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {/* Contact Info Cards */}
-          {contactInfo.map((info, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="relative"
+          <p className="text-text-secondary font-instrumentsans text-[15px] max-w-md leading-relaxed opacity-70">
+            I&apos;m always open to interesting collaborations, full-stack projects, or just a good conversation about tech. Reach out!
+          </p>
+
+          {/* Primary CTA */}
+          <a
+            href={`mailto:${email}`}
+            className="mt-2 px-6 py-2.5 rounded-md border-2 border-border-primary bg-bg-elevated/30 text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-hover-tint hover:border-border-accent card-inset-shadow transition-all duration-200 font-instrumentsans"
+          >
+            {email}
+          </a>
+
+          {/* Social icons */}
+          <div className="flex items-center gap-4 mt-2 text-text-muted">
+            <a
+              href={socials.github.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="hover:text-text-primary transition-colors duration-200"
             >
-              <div className="glass-card rounded-2xl p-6 hover:scale-105 transition-all duration-300 text-center h-full group">
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-16 h-16 mx-auto mb-4 p-4 glass rounded-full group-hover:bg-gradient-primary transition-all duration-300"
-                >
-                  <div className="text-blue-500 dark:text-blue-400 group-hover:text-white transition-colors duration-300">
-                    {info.icon}
-                  </div>
-                </motion.div>
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{info.label}</h3>
-                {info.href !== "#" ? (
-                  <a 
-                    href={info.href}
-                    className="text-slate-600 dark:text-slate-300 hover:text-gradient transition-colors inline-flex items-center gap-1"
-                  >
-                    {info.value}
-                    <ExternalLink size={16} />
-                  </a>
-                ) : (
-                  <p className="text-slate-600 dark:text-slate-300">{info.value}</p>
-                )}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg>
+            </a>
+            <a
+              href={socials.linkedin.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-text-primary transition-colors duration-200"
+            >
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+            <a
+              href={`mailto:${email}`}
+              aria-label="Email"
+              className="hover:text-text-primary transition-colors duration-200"
+            >
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </a>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <div className="glass-card rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300">
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Send a Message</h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-slate-600 dark:text-slate-300 mb-2 font-medium">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 glass border border-white/20 rounded-lg text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white/20 dark:focus:bg-white/10 transition-all duration-200"
-                    placeholder="Enter your name"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-slate-600 dark:text-slate-300 mb-2 font-medium">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 glass border border-white/20 rounded-lg text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white/20 dark:focus:bg-white/10 transition-all duration-200"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-slate-600 dark:text-slate-300 mb-2 font-medium">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    required
-                    rows={5}
-                    className="w-full px-4 py-3 glass border border-white/20 rounded-lg text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:bg-white/20 dark:focus:bg-white/10 transition-all duration-200 resize-none"
-                    placeholder="Tell me about your project or just say hello..."
-                  />
-                </div>
-                
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 glass hover:bg-gradient-primary hover:text-white transition-all duration-300 rounded-lg text-slate-700 dark:text-white border border-white/20"
-                >
-                  <Send size={20} />
-                  Send Message
-                </motion.button>
-              </form>
-            </div>
-          </motion.div>
-
-          {/* Social Links & Additional Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
-            {/* Social Media */}
-            <div className="glass-card rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300">
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Connect on Social</h3>
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-4 glass rounded-full text-slate-600 dark:text-slate-300 hover:text-gradient hover:bg-gradient-primary transition-all duration-300"
-                  >
-                    {social.icon}
-                  </motion.a>
-                ))}
-              </div>
-              <p className="text-slate-500 dark:text-slate-400 mt-6 leading-relaxed">
-                Follow me for updates on my latest projects, tech insights, and industry thoughts.
-              </p>
-            </div>
-
-            {/* Availability */}
-            <div className="glass-card rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300">
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-4">Availability</h3>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-slate-700 dark:text-white font-medium">Available for new projects</span>
-              </div>
-              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                I'm currently accepting new freelance projects and full-time opportunities. 
-                Let's discuss how I can help bring your vision to life.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Footer */}
-        <motion.footer
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 pt-8 border-t border-slate-200 dark:border-slate-700 text-center"
-        >
-          <p className="text-slate-500 dark:text-slate-400">
-            © 2024 Dharun Saravanakumar. Crafted with modern web technologies.
+          {/* Quote */}
+          <p className="text-center text-xl font-instrumentserif font-medium text-text-secondary/70 mt-6">
+            &ldquo;Never stop building&rdquo;
           </p>
-          <p className="text-slate-400 dark:text-slate-500 mt-2 text-sm">
-            Passionate about creating innovative solutions through technology
-          </p>
-        </motion.footer>
-      </div>
-    </section>
+        </div>
+      </section>
+
+      {/* ── Footer ────────────────────────────────────────── */}
+      <footer className="w-full flex justify-center items-center pb-12 pt-4 px-2 lg:px-0">
+        <div className="relative z-10 w-full max-w-2xl pt-4 pb-2 px-0">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-1 md:gap-2 text-sm text-text-primary border-t border-border-primary pt-4 font-instrumentsans">
+            <span>
+              Crafted with <span className="text-red-500">❤️</span> by{' '}
+              <span className="text-text-secondary">{siteConfig.name}</span>
+            </span>
+            <span className="hidden md:inline text-border-primary">·</span>
+            <span className="text-text-secondary">{localTime} IST</span>
+            <span className="hidden md:inline text-border-primary">·</span>
+            <span>&copy; {currentYear} All rights reserved</span>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 };
 
