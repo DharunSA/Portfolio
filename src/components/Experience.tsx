@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, Code2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { experiences } from '@/data/experience';
@@ -10,7 +10,11 @@ function formatDate(iso: string): string {
 }
 
 function formatRange(startDate: string, endDate?: string): string {
-  return `${formatDate(startDate)} — ${endDate ? formatDate(endDate) : 'Present'}`;
+  const start = formatDate(startDate);
+  if (!endDate) return `${start} — Present`;
+  const end = formatDate(endDate);
+  if (start === end) return start;
+  return `${start} — ${end}`;
 }
 
 function RoleEntry({ exp, defaultExpanded = false }: { exp: Experience; defaultExpanded?: boolean }) {
@@ -80,19 +84,25 @@ function RoleEntry({ exp, defaultExpanded = false }: { exp: Experience; defaultE
 }
 
 function CompanyGroup({ exps, defaultOpen = false }: { exps: Experience[]; defaultOpen?: boolean }) {
-  const [{ company, location, logoInitial, logoColor }] = exps;
+  const [{ company, location, logo, logoInitial, logoColor }] = exps;
 
   return (
     <div className="pt-6 first:pt-0">
       <div className="relative">
         <div className="flex items-center justify-between gap-2 mb-2">
           <div className="flex items-center gap-3 min-w-0">
-            <div
-              className="w-6 h-6 rounded bg-bg-elevated border border-border-primary card-inset-shadow flex items-center justify-center overflow-hidden shrink-0 text-white text-xs font-bold"
-              style={{ backgroundColor: logoColor }}
-            >
-              {logoInitial}
-            </div>
+            {logo ? (
+              <div className="w-10 h-10 rounded-xl bg-white border border-border-primary/60 card-inset-shadow flex items-center justify-center overflow-hidden shrink-0 p-1">
+                <img src={logo} alt={`${company} logo`} className="w-full h-full object-contain" />
+              </div>
+            ) : (
+              <div
+                className="w-10 h-10 rounded-xl bg-bg-elevated border border-border-primary card-inset-shadow flex items-center justify-center overflow-hidden shrink-0 text-white text-base font-bold"
+                style={{ backgroundColor: logoColor }}
+              >
+                {logoInitial}
+              </div>
+            )}
             <h3 className="text-base font-medium text-text-primary tracking-tight truncate font-instrumentsans">
               {company}
             </h3>
@@ -109,7 +119,7 @@ function CompanyGroup({ exps, defaultOpen = false }: { exps: Experience[]; defau
               <div key={exp.id} className="relative pl-6 pb-6 last:pb-2">
                 <div className={`absolute left-[11px] w-[1px] bg-border-primary/60 top-[-16px] ${isLast ? 'h-[28px]' : 'bottom-0'}`} />
                 <div className="absolute left-[11px] top-[4px] w-2.5 h-[8px] border-l border-b border-border-primary/60 rounded-bl-[4px]" />
-                <RoleEntry exp={exp} defaultExpanded={defaultOpen && i === 0} />
+                <RoleEntry exp={exp} defaultExpanded={defaultOpen} />
               </div>
             );
           })}

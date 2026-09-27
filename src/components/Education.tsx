@@ -14,7 +14,7 @@ const Education = () => {
       year: "Aug 2023 – Present",
       gpa: "8.3/10.0",
       description: "Comprehensive study in Electronics and Communication Engineering with focus on embedded systems, IoT, and full-stack development",
-      highlights: ["Data Structures and Algorithms", "Computer Architecture", "Database Management", "Embedded Systems", "Internet of Things (IoT)"]
+      highlights: ["Data Structures and Algorithms", "System Design", "Operating Systems", "Database Management", "Computer Architecture", "Embedded Systems", "Internet of Things (IoT)"]
     }
   ];
 

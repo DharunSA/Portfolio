@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { siteConfig } from '@/data/siteConfig';
 import SpotifyNowPlaying from './SpotifyNowPlaying';
 

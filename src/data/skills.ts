@@ -24,13 +24,16 @@ export const techRegistry: TechItem[] = [
 
   // Frameworks & Libraries
   { name: "React.js", category: "frameworks", icon: devicon("react") },
+  { name: "Next.js", category: "frameworks", icon: devicon("nextjs") },
   { name: "Node.js", category: "frameworks", icon: devicon("nodejs") },
   { name: "Express.js", category: "frameworks", icon: devicon("express") },
+  { name: "FastAPI", category: "frameworks", icon: devicon("fastapi") },
   { name: "Flask", category: "frameworks", icon: devicon("flask") },
   { name: "Streamlit", category: "frameworks", icon: devicon("streamlit") },
   { name: "TensorFlow", category: "frameworks", icon: devicon("tensorflow") },
   { name: "Keras", category: "frameworks", icon: devicon("keras") },
   { name: "Scikit-learn", category: "frameworks", icon: devicon("scikitlearn") },
+  { name: "Pandas", category: "frameworks", icon: devicon("pandas") },
   { name: "OpenCV", category: "frameworks", icon: devicon("opencv") },
   { name: "Tailwind CSS", category: "frameworks", icon: devicon("tailwindcss") },
 

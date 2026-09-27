@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { siteConfig } from '@/data/siteConfig';
 
 const Contact = () => {

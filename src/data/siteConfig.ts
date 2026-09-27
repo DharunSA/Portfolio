@@ -79,7 +79,7 @@ export const siteConfig = {
   },
 
   resume: {
-    path: "/Dharun_Saravanakumar Resume.pdf",
+    path: "/Dharun_New.pdf",
     filename: "Dharun_Saravanakumar_Resume.pdf",
   },
 } as const;

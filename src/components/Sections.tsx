@@ -71,19 +71,30 @@ export function Education() {
 
         <div className="space-y-4">
           {education.map((edu) => (
-            <div key={edu.id} className="p-4 rounded-md border-2 border-border-primary card-inset-shadow bg-bg-primary">
-              <div className="flex items-start justify-between gap-2 mb-1">
-                <h3 className="text-base font-medium text-text-primary font-instrumentsans leading-snug">
-                  {edu.degree}
-                </h3>
-                <span className="text-sm text-text-muted whitespace-nowrap font-instrumentsans shrink-0">
-                  {edu.period}
-                </span>
+            <div key={edu.id} className="p-5 rounded-lg border-2 border-border-primary card-inset-shadow bg-bg-primary">
+              <div className="flex items-start gap-3.5 mb-3">
+                {edu.logo && (
+                  <div className="w-10 h-10 rounded-xl bg-white border border-border-primary/60 card-inset-shadow flex items-center justify-center overflow-hidden shrink-0 p-1 mt-0.5">
+                    <img src={edu.logo} alt={`${edu.institution} logo`} className="w-full h-full object-contain" />
+                  </div>
+                )}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2 mb-0.5">
+                    <h3 className="text-base font-medium text-text-primary font-instrumentsans leading-snug">
+                      {edu.degree}
+                    </h3>
+                    <span className="text-sm text-text-muted whitespace-nowrap font-instrumentsans shrink-0">
+                      {edu.period}
+                    </span>
+                  </div>
+                  <p className="text-sm text-text-secondary font-instrumentsans">{edu.institution}</p>
+                  <p className="text-xs text-text-muted font-instrumentsans mt-1">
+                    {edu.location} · GPA: <span className="text-text-primary font-medium">{edu.gpa}</span>
+                  </p>
+                </div>
               </div>
-              <p className="text-sm text-text-secondary font-instrumentsans mb-1">{edu.institution}</p>
-              <p className="text-sm text-text-muted font-instrumentsans mb-3">{edu.location} · GPA: <span className="text-text-primary font-medium">{edu.gpa}</span></p>
 
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1.5 pt-1">
                 {edu.coursework.map((c) => (
                   <span key={c} className="text-[11px] px-2 py-0.5 rounded-md bg-bg-badge/10 border border-border-primary text-text-muted font-mono">
                     {c}

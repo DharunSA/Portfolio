@@ -1,5 +1,40 @@
-import { techRegistry } from '@/data/skills';
+import { techRegistry, type TechItem } from '@/data/skills';
 import { useState } from 'react';
+
+function TechIconCard({ item, isNeighbor }: { item: TechItem; isNeighbor: boolean }) {
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <div
+      className="
+        w-9 h-9 rounded-[9px] overflow-hidden cursor-pointer shrink-0
+        flex items-center justify-center
+        transition-transform duration-300
+        group-hover:-translate-y-3 group-hover:scale-125
+      "
+      style={{
+        transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+        transform: isNeighbor ? 'translateY(-4px) scale(1.08)' : undefined,
+        background: hasError ? 'var(--color-bg-elevated)' : undefined,
+        border: hasError ? '1px solid var(--color-border-primary)' : undefined,
+      }}
+    >
+      {hasError ? (
+        <span className="text-[10px] font-bold text-text-secondary">
+          {item.name.slice(0, 2)}
+        </span>
+      ) : (
+        <img
+          src={item.icon}
+          alt={item.name}
+          className="w-full h-full object-contain"
+          loading="lazy"
+          onError={() => setHasError(true)}
+        />
+      )}
+    </div>
+  );
+}
 
 const Skills = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -48,36 +83,8 @@ const Skills = () => {
                     />
                   </span>
 
-                  {/* ── Icon — CSS spring bounce via cubic-bezier ── */}
-                  <div
-                    className="
-                      w-9 h-9 rounded-[9px] overflow-hidden cursor-pointer shrink-0
-                      flex items-center justify-center
-                      transition-transform duration-300
-                      group-hover:-translate-y-3 group-hover:scale-125
-                    "
-                    style={{
-                      transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-                      transform: isNeighbor
-                        ? 'translateY(-4px) scale(1.08)'
-                        : undefined,
-                    }}
-                  >
-                    <img
-                      src={item.icon}
-                      alt={item.name}
-                      className="w-full h-full object-contain"
-                      loading="lazy"
-                      onError={(e) => {
-                        const t = e.target as HTMLImageElement;
-                        t.style.display = 'none';
-                        const p = t.parentElement!;
-                        p.style.background = 'var(--color-bg-elevated)';
-                        p.style.border = '1px solid var(--color-border-primary)';
-                        p.innerHTML = `<span style="font-size:10px;font-weight:700;color:var(--color-text-secondary)">${item.name.slice(0, 2)}</span>`;
-                      }}
-                    />
-                  </div>
+                  {/* ── Icon ──────────────────────────────────── */}
+                  <TechIconCard item={item} isNeighbor={isNeighbor} />
                 </div>
               );
             })}

@@ -49,6 +49,7 @@ export interface EducationEntry {
   startDate: string;
   location: string;
   gpa: string;
+  logo?: string;
   coursework: string[];
 }
 
@@ -61,8 +62,12 @@ export const education: EducationEntry[] = [
     startDate: "2023-08-01",
     location: "Chittoor, AP",
     gpa: "8.4 / 10.0",
+    logo: "/education/iiit-sricity.png",
     coursework: [
       "Data Structures & Algorithms",
+      "System Design",
+      "Operating Systems",
+      "Database Management",
       "Machine Learning",
       "Embedded Systems",
       "IoT",
